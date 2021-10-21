@@ -1,0 +1,27 @@
+# Create new branch and write a comment with the new branch unter the issue
+name: Issue comment
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  create_new_branch:
+     name: Create new branch
+     if: contains(github.event.comment.html_url, '/issues/') && contains(github.event.comment.body, '/branch')
+     runs-on: ubuntu-latest
+     env:
+      BRANCH_NAME: branch-${{ github.event.issue.number }}-${{ github.event.comment.id }}
+     steps:
+     - uses: actions/checkout@v2
+     - name: Create new branch
+       uses: peterjgrainger/action-create-branch@v2.0.1
+       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       with:
+        branch: ${{ env.BRANCH_NAME }}
+     - name: Create comment
+       uses: peter-evans/create-or-update-comment@v1
+       with:
+         issue-number: ${{ github.event.issue.number }}
+         body: |
+            Your branch is ready:
+            https://github.com/${{ github.repository }}/tree/${{ env.BRANCH_NAME }}

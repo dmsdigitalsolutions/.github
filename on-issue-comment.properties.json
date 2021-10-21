@@ -1,0 +1,5 @@
+{
+    "name": "New Branch By Issue Comment Workflow",
+    "description": "Create new branch and write a comment with the new branch unter the issue.",
+    "iconName": "git-branch"
+}
