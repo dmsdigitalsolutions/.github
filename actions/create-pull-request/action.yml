@@ -8,13 +8,10 @@ runs:
       - name: Get issue number
         run: echo "ISSUE_NUMBER=$(echo $GITHUB_REF | cut -d'-' -f 2)" >> $GITHUB_ENV
         shell: bash     
-      - name: Echo
-        run: echo ${{ toJSON(github.event.repository.default_branch) }}
-        shell: bash
-#      - name: Create pull request
-#        uses: repo-sync/pull-request@v2
-#        with:
-#         github_token: ${{ inputs.github_token }}
-#         destination_branch: ${{ default-branch }}
-#         pr_title: "Pulling ${{ github.ref }} into master"
-#         pr_body: "Closes #${{ env.ISSUE_NUMBER }}"
+      - name: Create pull request
+        uses: repo-sync/pull-request@v2
+        with:
+         github_token: ${{ inputs.github_token }}
+         destination_branch: ${{ github.event.repository.default_branch }}
+         pr_title: "Pulling ${{ github.ref }} into master"
+         pr_body: "Closes #${{ env.ISSUE_NUMBER }}"
