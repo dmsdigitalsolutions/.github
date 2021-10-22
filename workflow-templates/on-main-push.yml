@@ -1,4 +1,4 @@
-# Test code and deploy to the developement environment
+# Test code and deploy to the development environment
 name: Main push
 on:
   push:
@@ -45,5 +45,5 @@ jobs:
       - name: Deploy
         uses: dmsdigitalsolutions/.github/actions/deploy-surge@main
         with:
-          domain_name: ${{ github.event.repository.name }}-developement
+          domain_name: ${{ github.event.repository.name }}-development
           surge_token: ${{ secrets.SURGE_TOKEN }}
