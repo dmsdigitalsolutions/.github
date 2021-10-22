@@ -46,5 +46,5 @@ jobs:
       - name: Deploy
         uses: dmsdigitalsolutions/.github/actions/deploy-surge@main
         with:
-          domain_name: ${{ github.repository }}-production
+          domain_name: ${{ github.event.repository.name }}-production
           surge_token: ${{ secrets.SURGE_TOKEN }}

@@ -7,7 +7,7 @@ jobs:
   stop:
     runs-on: ubuntu-latest
     env:
-      DOMAIN: ${{ github.repository }}-${{ github.event.number }}
+      DOMAIN: ${{ github.event.repository.name }}-${{ github.event.number }}
     steps:
       - name: Stop temporary environment
         uses: dmsdigitalsolutions/.github/actions/teardown-surge@main

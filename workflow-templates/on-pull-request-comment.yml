@@ -9,7 +9,7 @@ jobs:
     if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/start')
     runs-on: ubuntu-latest
     env:
-      DOMAIN: ${{ github.repository }}-${{ github.event.issue.number }}
+      DOMAIN: ${{ github.event.repository.name }}-${{ github.event.issue.number }}
     steps:
       - uses: actions/checkout@v2
       - name: Pull request checout
@@ -42,7 +42,7 @@ jobs:
     if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/stop')
     runs-on: ubuntu-latest
     env:
-      DOMAIN: ${{ github.repository }}-${{ github.event.issue.number }}
+      DOMAIN: ${{ github.event.repository.name }}-${{ github.event.issue.number }}
     steps:
       - name: Teardown environment
         uses: dmsdigitalsolutions/.github/actions/teardown-surge@main
