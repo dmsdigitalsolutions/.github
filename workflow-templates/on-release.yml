@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: dmsdigitalsolutions/.github/actions/node-build-artifact@main
         with:
-        artifact_name: ${{ github.sha }}
+          artifact_name: ${{ github.sha }}
   e2e_tests:
     needs: build
     runs-on: ubuntu-latest
