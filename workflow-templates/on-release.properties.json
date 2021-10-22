@@ -1,0 +1,5 @@
+{
+  "name": "Release",
+  "description": "Test and deploy production environment.",
+  "iconName": "release"
+}

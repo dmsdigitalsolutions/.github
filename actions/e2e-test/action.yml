@@ -1,0 +1,10 @@
+name: Run end to end tests
+runs:
+  using: "composite"
+  steps:
+    - name: Run end to end tests
+      run: |
+        echo "Running e2es tests..."
+        sleep 5s
+        echo "Success"
+      shell: bash

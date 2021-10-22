@@ -1,0 +1,5 @@
+{
+  "name": "Auto temporary env teardown",
+  "description": "Remove temporary environment after closing the pull request.",
+  "iconName": "remove-env"
+}

@@ -1,0 +1,13 @@
+name: Run unit tests
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 16.10.0
+    - name: Install dependencies
+      run: npm install
+      shell: bash
+    - name: Run tests
+      run: npm test
+      shell: bash

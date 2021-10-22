@@ -1,0 +1,50 @@
+# Test and deploy production environment
+name: Deploy to production environment
+on:
+  release:
+    types: released
+    branches: main
+jobs:
+  style_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/style-check@main
+  unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/node-unit-test@main
+  static_code_analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/static-code-analysis@main
+  build:
+    needs: [style_check, unit_tests, static_code_analysis]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/node-build-artifact@main
+        with:
+        artifact_name: ${{ github.sha }}
+  e2e_tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/e2e-test@main
+  deploy:
+    needs: e2e_tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact from current workflow
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ github.sha }}
+          path: ./build
+      - name: Deploy
+        uses: dmsdigitalsolutions/.github/actions/deploy-surge@main
+        with:
+          domain_name: ${{ github.repository }}-production
+          surge_token: ${{ secrets.SURGE_TOKEN }}

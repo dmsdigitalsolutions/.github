@@ -1,0 +1,10 @@
+name: Run static code analysis
+runs:
+  using: "composite"
+  steps:
+    - name: Run code analysis
+      run: |
+        echo "Running code analysis..."
+        sleep 5s
+        echo "Success"
+      shell: bash

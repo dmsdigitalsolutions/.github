@@ -1,0 +1,5 @@
+{
+  "name": "Test and deploy",
+  "description": "Test code and deploy to the developement environment.",
+  "iconName": "git-push"
+}

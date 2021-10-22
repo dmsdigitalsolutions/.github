@@ -1,0 +1,5 @@
+{
+  "name": "Auto temporary env",
+  "description": "Create and destroy temporary environment.",
+  "iconName": "server"
+}

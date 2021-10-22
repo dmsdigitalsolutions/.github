@@ -1,0 +1,58 @@
+# Create and destroy temporary environment
+name: Pull request comment
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  start:
+    name: Start temporary env
+    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/start')
+    runs-on: ubuntu-latest
+    env:
+      DOMAIN: ${{ github.repository }}-${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Pull request checout
+        run: gh pr checkout ${{ github.event.issue.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Getting last commit sha
+        run: echo "LAST_COMMIT_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2.15.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./build
+          workflow: on-push.yml
+          name: ${{ env.LAST_COMMIT_SHA }}
+      - name: Deploy to Surge
+        uses: dmsdigitalsolutions/.github/actions/deploy-surge@main
+        with:
+          surge_token: ${{ secrets.SURGE_TOKEN }}
+          domain_name: ${{ env.DOMAIN }}
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Your temporary environment is ready:
+            http://${{ env.DOMAIN }}.surge.sh
+  stop:
+    name: Stop temporary env
+    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, '/stop')
+    runs-on: ubuntu-latest
+    env:
+      DOMAIN: ${{ github.repository }}-${{ github.event.issue.number }}
+    steps:
+      - name: Teardown environment
+        uses: dmsdigitalsolutions/.github/actions/teardown-surge@main
+        with:
+          domain_name: ${{ env.DOMAIN }}
+          surge_token: ${{ secrets.SURGE_TOKEN }}
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Your temporary environment is removed:
+            http://${{ env.DOMAIN }}.surge.sh

@@ -1,0 +1,23 @@
+# Remove temporary environment after closing the pull request
+name: Pull request closed
+on:
+  pull_request:
+    types: [closed]
+jobs:
+  stop:
+    runs-on: ubuntu-latest
+    env:
+      DOMAIN: ${{ github.repository }}-${{ github.event.number }}
+    steps:
+      - name: Stop temporary environment
+        uses: dmsdigitalsolutions/.github/actions/teardown-surge@main
+        with:
+          domain_name: ${{ env.DOMAIN }}
+          surge_token: ${{ secrets.SURGE_TOKEN }}
+      - name: Write commnet
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.number }}
+          body: |
+            Your temporary environment is removed:
+            http://${{ env.DOMAIN }}.surge.sh

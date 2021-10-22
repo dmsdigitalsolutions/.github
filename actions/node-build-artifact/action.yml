@@ -1,0 +1,23 @@
+name: Build the application with node and create an artifact
+inputs:
+  artifact_name:
+    required: true
+    type: string
+runs:
+  using: "composite"
+  steps:
+      - name: Setup node
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.10.0
+      - name: Install dependencies
+        run: npm install
+        shell: bash
+      - name: Build
+        run: npm run build
+        shell: bash
+      - name: Create artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: ./build

@@ -1,0 +1,5 @@
+{
+  "name": "Test and create pull request",
+  "description": "Test the code and create pull request if it is not exist.",
+  "iconName": "magnifying-glass"
+}

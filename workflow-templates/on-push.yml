@@ -1,0 +1,44 @@
+# Test the code and create pull request if it is not exist
+name: On push
+on:
+  push:
+    branches-ignore:
+      - main
+jobs:
+  style_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/style-check@main
+  unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/node-unit-test@main
+  static_code_analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/static-code-analysis@main
+  build:
+    needs: [style_check, unit_tests, static_code_analysis]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/node-build-artifact@main
+        with:
+        artifact_name: ${{ github.sha }}
+  e2e_tests:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/e2e-test@main
+  create_pull_request:
+    needs: [e2e_tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dmsdigitalsolutions/.github/actions/create-pull-request@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
