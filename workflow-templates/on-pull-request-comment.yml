@@ -12,7 +12,6 @@ jobs:
       DOMAIN: ${{ github.event.repository.name }}-${{ github.event.issue.number }}
     steps:
       - uses: actions/checkout@v2
-      - run: echo  ${{ github.event.repository.name }}
       - name: Pull request checout
         run: gh pr checkout ${{ github.event.issue.number }}
         env:
