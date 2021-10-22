@@ -1,0 +1,24 @@
+name: Teardown application with surge
+inputs:
+  domain_name:
+    required: true
+    type: string
+  surge_token:
+    required: true
+runs:
+  using: "composite"
+  steps:
+      - name: Setup node
+        uses: actions/setup-node@v2
+      - name: Setup surge
+        run: npm install --global surge
+        shell: bash
+      - name: Teardown environment
+        run: |
+          if [[ $(surge list --token ${{ inputs.surge_token }}) == *"${{ inputs.domain_name }}.surge.sh"* ]]
+          then
+            surge teardown ${{ inputs.domain_name }}.surge.sh --token ${{ inputs.surge_token }}
+          else
+            echo "Environment is already down"
+          fi
+        shell: bash

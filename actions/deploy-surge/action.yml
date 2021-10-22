@@ -1,0 +1,19 @@
+name: Deploy application with surge
+inputs:
+  domain_name:
+    required: true
+    type: string
+  surge_token:
+    required: true
+    type: string
+runs:
+  using: "composite"
+  steps:
+    - name: Setup node
+      uses: actions/setup-node@v2
+    - name: Install Surge
+      run: npm install --global surge
+      shell: bash
+    - name: Deploy application
+      run: surge ./build ${{ inputs.domain_name }}.surge.sh --token ${{ inputs.surge_token }}
+      shell: bash
