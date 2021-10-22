@@ -12,6 +12,6 @@ runs:
         uses: repo-sync/pull-request@v2
         with:
          github_token: ${{ inputs.github_token }}
-         destination_branch: "main"
+         destination_branch: ${{ $default-branch }}
          pr_title: "Pulling ${{ github.ref }} into master"
          pr_body: "Closes #${{ env.ISSUE_NUMBER }}"

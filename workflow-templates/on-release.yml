@@ -3,7 +3,7 @@ name: Deploy to production environment
 on:
   release:
     types: released
-    branches: main
+    branches: [ $default-branch ]
 jobs:
   style_check:
     runs-on: ubuntu-latest
