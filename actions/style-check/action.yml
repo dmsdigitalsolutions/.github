@@ -2,11 +2,8 @@ name: Run style check
 runs:
   using: "composite"
   steps:
-    - name: Setup node
-      uses: actions/setup-node@v2
-    - name: Install Surge
-      run: npm install --global npx
-      shell: bash
+    - name: GitHub Action for npx
+      uses: mikeal/npx@1.0.0
     - name: Run style check
       run: npx prettier --check .
       shell: bash
