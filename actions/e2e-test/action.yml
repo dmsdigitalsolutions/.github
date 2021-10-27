@@ -2,8 +2,9 @@ name: Run end to end tests
 runs:
   using: "composite"
   steps:
+    - name: 
     - name: Cypress run
       uses: cypress-io/github-action@v2
       with:
-        build: npm run build
+        build: npm install & npm run build
         start: npm start
