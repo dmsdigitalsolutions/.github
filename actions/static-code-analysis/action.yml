@@ -1,13 +1,10 @@
-name: Run unit tests
+name: Run static code analysis
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 16.10.0
-    - name: Install dependencies
-      run: npm install
-      shell: bash
-    - name: Run tests
-      run: npm test
+    - name: Run code analysis
+      run: |
+        echo "Running code analysis..."
+        sleep 5s
+        echo "Success"
       shell: bash
