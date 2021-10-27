@@ -1,9 +1,11 @@
 name: Run style check
 runs:
-  using: "composite"
-  steps:
-    - name: GitHub Action for npx
-      uses: mikeal/npx@1.0.0
-    - name: Run style check
-      run: npx prettier --check .
-      shell: bash
+  - uses: actions/setup-node@v2
+    with:
+      node-version: 16.10.0
+  - name: Install dependencies
+    run: npm install
+    shell: bash
+  - name: Run checks
+    run: npm run lint
+    shell: bash
