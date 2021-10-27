@@ -2,8 +2,14 @@ name: Run end to end tests
 runs:
   using: "composite"
   steps:
+    - name: Install dependencies
+      run: npm install
+      shell: bash
+    - name: Build the app
+      run: npm run build
+      shell: bash
     - name: Cypress run
       uses: cypress-io/github-action@v2
       with:
-        build: npm install & npm run build
+        build: false
         start: npm start
