@@ -1,11 +1,13 @@
 name: Run style check
 runs:
-  - uses: actions/setup-node@v2
-    with:
-      node-version: 16.10.0
-  - name: Install dependencies
-    run: npm install
-    shell: bash
-  - name: Run checks
-    run: npm run lint
-    shell: bash
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 16.10.0
+    - name: Install dependencies
+      run: npm install
+      shell: bash
+    - name: Run checks
+      run: npm run lint
+      shell: bash
