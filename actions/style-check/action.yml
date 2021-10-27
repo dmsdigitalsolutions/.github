@@ -1,10 +1,12 @@
-name: Run static code analysis
+name: Run style check
 runs:
   using: "composite"
   steps:
-    - name: Run code analysis
-      run: |
-        echo "Running code analysis..."
-        sleep 5s
-        echo "Success"
+    - name: Setup node
+      uses: actions/setup-node@v2
+    - name: Install Surge
+      run: npm install --global npx
+      shell: bash
+    - name: Run style check
+      run: npx prettier --check .
       shell: bash
