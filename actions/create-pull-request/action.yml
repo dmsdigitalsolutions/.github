@@ -13,5 +13,5 @@ runs:
         with:
          github_token: ${{ inputs.github_token }}
          destination_branch: ${{ github.event.repository.default_branch }}
-         pr_title: "Pulling ${{ github.ref }} into master"
+         pr_title: "Pulling ${{ github.ref }} into ${{ github.event.repository.default_branch }}"
          pr_body: "Closes #${{ env.ISSUE_NUMBER }}"
