@@ -9,6 +9,5 @@ runs:
       run: npm install
       shell: bash
     - name: Run tests
-      run: npm test --passWithNoTests
+      run: npm test
       shell: bash
-# !! Remove --passWithNoTests !!
