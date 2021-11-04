@@ -9,7 +9,7 @@ runs:
         run: echo "ISSUE_NUMBER=$(echo $GITHUB_REF | cut -d'-' -f 2)" >> $GITHUB_ENV
         shell: bash
       - name: Get branch name
-        run: echo "BRANCH_NAME=$(echo $GITHUB_REF | cut -c 11-)" >> $GITHUB_ENV
+        run: echo "BRANCH_NAME=$(echo $GITHUB_REF | cut -c 12-)" >> $GITHUB_ENV
         shell: bash
       - name: Create pull request
         uses: repo-sync/pull-request@v2
