@@ -9,7 +9,7 @@ runs:
         run: echo "ISSUE_NUMBER=$(echo $GITHUB_REF | cut -d'-' -f 2)" >> $GITHUB_ENV
         shell: bash
       - name: Get issue number
-        run: echo ${{ toJSON(github.event.issue.labels) }}
+        run: echo ${{ toJSON(github) }}
         shell: bash
       - name: Create pull request
         uses: repo-sync/pull-request@v2
