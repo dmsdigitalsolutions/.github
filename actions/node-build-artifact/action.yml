@@ -15,7 +15,7 @@ runs:
         run: npm install
         shell: bash
       - name: Build
-        run: npm run build-test
+        run: npm run build
         shell: bash
       - name: Create artifact
         uses: actions/upload-artifact@v2
