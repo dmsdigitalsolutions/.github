@@ -17,5 +17,5 @@ runs:
          github_token: ${{ inputs.github_token }}
          destination_branch: ${{ github.event.repository.default_branch }}
          pr_title: "Pulling ${{ env.BRANCH_NAME }} into ${{ github.event.repository.default_branch }}"
-         pr_body: "Closes #${{ env.ISSUE_NUMBER }}"
+         pr_body: "Close #${{ env.ISSUE_NUMBER }}"
          pr_draft: true
